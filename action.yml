@@ -1,0 +1,41 @@
+name: "MarkCV"
+description: "Convert a Markdown CV/resume into a styled PDF"
+
+inputs:
+  input:
+    description: "Path to the Markdown CV file"
+    required: true
+    default: "resume.md"
+
+  template:
+    description: "Template name or path to a custom template directory"
+    required: false
+    default: "default"
+
+  output:
+    description: "Output PDF path"
+    required: false
+    default: "resume.pdf"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install markdown jinja2 pyyaml playwright
+        python -m playwright install chromium --with-deps
+
+    - name: Generate CV
+      shell: bash
+      run: |
+        python "${{ github.action_path }}/markcv.py" \
+          --input "${{ inputs.input }}" \
+          --template "${{ inputs.template }}" \
+          --output "${{ inputs.output }}"
