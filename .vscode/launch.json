@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug MarkCV",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/markcv.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--input",
+        "sample.md",
+        "--template",
+        "default",
+        "--output",
+        "output/resume.pdf"
+      ]
+    }
+  ]
+}

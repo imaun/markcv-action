@@ -35,7 +35,7 @@ def resolve_template(template_input: str, workspace: Path) -> Path:
     if candidate_path.exists():
         return candidate_path.resolve()
 
-    workspace_template = workspace / template_input
+    workspace_template = workspace / 'templates' / template_input
     if workspace_template.exists():
         return workspace_template.resolve()
 
@@ -81,6 +81,10 @@ def export_pdf(html: str, template_dir: Path, output_path: Path) -> None:
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
+        # browser = p.chromium.launch(
+        #     executable_path=r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        #     headless=True
+        # )
         page = browser.new_page()
 
         page.goto(temp_html.as_uri(), wait_until="networkidle")
